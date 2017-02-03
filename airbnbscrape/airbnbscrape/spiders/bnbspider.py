@@ -2,24 +2,21 @@
 import scrapy
 import json
 import sys
-from airbnbscrape.items import BnbtutorialItem
+from airbnbscrape.items import BnbItem
 from airbnbscrape.predict import Predict
 
-# QUERY = 'Portland-USA'
 
 class BnbspiderSpider(scrapy.Spider):
 	name = "airspider"
 	allowed_domains = ["airbnb.com"]
-	# QUERY = self.city
-	# start_urls = ['http://airbnb.com/s/' + QUERY]
 	
 
 	def __init__(self, city='', country='', *args, **kwargs):
 		super(BnbspiderSpider, self).__init__(*args, **kwargs)
-		# self.QUERY = city + '--' + country
-		# self.QUERY = city + '--' + country
+		
+		# Specify the query
 		self.start_urls = ['http://airbnb.com/s/%s' % city]
-		# print ('self query is', self.QUERY)
+
 
 	def parse(self, response):
 		#get the last page number on the page
@@ -62,7 +59,7 @@ class BnbspiderSpider(scrapy.Spider):
 			yield scrapy.Request(url, callback=self.parse_listing_contents)
 
 	def parse_listing_contents(self, response):
-		item = BnbtutorialItem()
+		item = BnbItem()
 		
 		json_array = response.xpath('//meta[@id="_bootstrap-room_options"]/@content').extract()
 		if json_array:

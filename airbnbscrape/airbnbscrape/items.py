@@ -8,7 +8,7 @@
 import scrapy
 
 
-class BnbtutorialItem(scrapy.Item):
+class BnbItem(scrapy.Item):
     # define the fields for your item here like:
     name = scrapy.Field()
     rev_count = scrapy.Field()
